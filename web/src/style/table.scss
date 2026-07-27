@@ -1,0 +1,19 @@
+/**
+ * 表格全局样式
+ * 统一管理所有表格的通用样式
+ */
+
+/* 表格行悬停样式 - 参考TDesign官方示例 */
+/* 使用更高优先级覆盖TDesign默认样式，统一为浅灰色 */
+table.t-table tbody tr:hover td,
+table.t-table tbody tr:hover {
+  background-color: #f5f7fa !important;
+  transition: background-color 0.2s ease;
+}
+
+/* 确保所有嵌套的表格都应用相同样式 */
+.t-table__content table tbody tr:hover td,
+.t-table__content table tbody tr:hover {
+  background-color: #f5f7fa !important;
+  transition: background-color 0.2s ease;
+}

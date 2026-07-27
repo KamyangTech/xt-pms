@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>生产管理系统</title>
+    <script>
+      // 不兼容浏览器检测与重定向 - 所有不支持关键特性的浏览器都会被拦截
+      (function() {
+        var redirect = function() {
+          window.location.href = '/browser-incompatible.html';
+        };
+
+        // 1. 检查 ES6 关键特性 (Vue 3 必需)
+        if (typeof Proxy === 'undefined') { redirect(); return; }
+        if (typeof Symbol === 'undefined') { redirect(); return; }
+
+        // 2. 检查 ES2020 语法 - 可选链 ?. (Vite modules 目标会输出)
+        try { new Function('"use strict"; return null?.x'); }
+        catch(e) { redirect(); return; }
+
+        // 3. 检查 ES2020 语法 - 空值合并 ?? 
+        try { new Function('"use strict"; return null ?? "default"'); }
+        catch(e) { redirect(); return; }
+      })();
+    </script>
+    <!-- 不识别 ES 模块的浏览器执行此降级重定向 -->
+    <script nomodule>
+      window.location.href = '/browser-incompatible.html';
+    </script>
+    <script>
+      var v = Date.now();
+
+      // 读取缓存标题
+      var cachedName = localStorage.getItem('pms_system_name');
+      if (cachedName) document.title = cachedName;
+
+      // 异步从 API 拉取最新配置
+      fetch('/api/system/system-info').then(function(r){ return r.json() }).then(function(res){
+        var d = res.data;
+        if (!d) return;
+
+        // 系统名称
+        if (d.system_name) {
+          document.title = d.system_name;
+          try { localStorage.setItem('pms_system_name', d.system_name); } catch(e){}
+        }
+
+        // Favicon：DB 中有就用自定义，没有则保持默认 logo.svg（前端 public/ 目录）
+        if (d.favicon_url) {
+          document.querySelector('link[rel="icon"]').href = d.favicon_url + '?v=' + v;
+        }
+      }).catch(function(){});
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+  <script>
+    window.global = window;
+  </script>
+</html>

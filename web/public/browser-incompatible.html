@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>浏览器不兼容</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .main-content {
+      position: absolute;
+      top: 44%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 100%;
+    }
+
+    .ie-icon-wrapper { margin-bottom: 30px; }
+    .ie-icon { width: 120px; height: auto; }
+
+    .title {
+      font-size: 24px; font-weight: 500; color: #333333;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 14px; color: #666666; margin-bottom: 0;
+    }
+
+    .recommend-wrapper {
+      position: fixed;
+      bottom: 60px;
+      left: 50%;
+      width: 640px;
+      margin-left: -320px;
+      background-color: #ffffff;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+      padding: 24px 32px;
+    }
+
+    .recommend-table { width: 100%; border-collapse: collapse; }
+    .recommend-table td { vertical-align: middle; }
+
+    .recommend-text {
+      font-size: 14px; color: #666666; text-align: left;
+    }
+
+    .browser-list { text-align: right; }
+
+    .browser-item {
+      display: inline-block;
+      text-align: center;
+      margin-left: 28px;
+    }
+
+    .browser-item img {
+      width: 32px; height: 32px; margin-bottom: 6px;
+    }
+
+    .browser-item div { font-size: 11px; color: #999999; }
+
+    @media (max-width: 768px) {
+      .recommend-wrapper {
+        width: 90%; left: 5%; margin-left: 0; bottom: 20px;
+      }
+      .recommend-table td { display: block; text-align: center; }
+      .recommend-text { text-align: center; margin-bottom: 16px; }
+      .browser-list { text-align: center; }
+      .browser-item { margin: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <div class="ie-icon-wrapper">
+      <img src="https://tdesign.gtimg.com/starter/result-page/ie.png" alt="IE" class="ie-icon"
+        onerror="this.style.display='none'">
+    </div>
+    <h1 class="title">浏览器不兼容</h1>
+    <p class="subtitle">抱歉，您正在使用的浏览器版本过低，无法打开当前网页。</p>
+  </div>
+
+  <div class="recommend-wrapper">
+    <table class="recommend-table">
+      <tr>
+        <td class="recommend-text">本系统推荐以下主流浏览器</td>
+        <td class="browser-list">
+          <div class="browser-item">
+            <img src="https://cdn.jsdelivr.net/npm/@browser-logos/chrome@latest/chrome_64x64.png"
+              alt="Chrome" onerror="this.style.display='none'">
+            <div>Chrome 80+</div>
+          </div>
+          <div class="browser-item">
+            <img src="https://cdn.jsdelivr.net/npm/@browser-logos/firefox@latest/firefox_64x64.png"
+              alt="Firefox" onerror="this.style.display='none'">
+            <div>Firefox 74+</div>
+          </div>
+          <div class="browser-item">
+            <img src="https://cdn.jsdelivr.net/npm/@browser-logos/safari@latest/safari_64x64.png"
+              alt="Safari" onerror="this.style.display='none'">
+            <div>Safari 13.1+</div>
+          </div>
+          <div class="browser-item">
+            <img src="https://cdn.jsdelivr.net/npm/@browser-logos/edge@latest/edge_64x64.png"
+              alt="Edge" onerror="this.style.display='none'">
+            <div>Edge 80+</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

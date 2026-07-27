@@ -1,0 +1,51 @@
+name: 功能建议
+description: 为项目提出一个新想法
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你花时间提出这个功能建议！
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 相关痛点
+      description: 这个功能解决了什么问题？请清晰简洁地描述。
+      placeholder: "我在使用时遇到了... 的困扰"
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 期望方案
+      description: 你期望的解决方案是什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 替代方案
+      description: 你考虑过的其他替代方案或变通方法
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: 影响范围
+      description: 建议影响哪个部分？
+      options:
+        - 后端 (server/)
+        - 前端 (web/)
+        - 数据库 (migrations/)
+        - 配置/部署
+        - 文档
+        - 全栈
+
+  - type: textarea
+    id: context
+    attributes:
+      label: 补充信息（可选）
+      description: 任何其他有助于理解该建议的上下文、截图或参考资料

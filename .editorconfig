@@ -1,0 +1,27 @@
+# EditorConfig: https://editorconfig.org
+# 跨编辑器代码风格统一，腾讯开源项目标准配置
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.go]
+indent_size = 4
+
+[{Makefile,*.mk}]
+indent_style = tab
+
+[*.{yaml,yml}]
+indent_size = 2
+
+[*.sql]
+indent_size = 2

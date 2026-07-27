@@ -1,0 +1,66 @@
+import * as echarts from 'echarts/core';
+import type { Ref, ShallowRef } from 'vue';
+import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
+
+/**
+ * eChart hook
+ * @param domId
+ */
+export const useChart = (domId: string): ShallowRef<echarts.ECharts> => {
+  let chartContainer: HTMLCanvasElement;
+  const selfChart = shallowRef<echarts.ECharts | any>();
+  let resizeTimer: ReturnType<typeof setTimeout>;
+  const updateContainer = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      selfChart.value.resize({
+        width: chartContainer.clientWidth,
+        height: chartContainer.clientHeight,
+      });
+    }, 200);
+  };
+
+  onMounted(() => {
+    if (!chartContainer) {
+      chartContainer = document.getElementById(domId) as HTMLCanvasElement;
+    }
+    selfChart.value = echarts.init(chartContainer);
+  });
+
+  window.addEventListener('resize', updateContainer, false);
+
+  onUnmounted(() => {
+    clearTimeout(resizeTimer);
+    window.removeEventListener('resize', updateContainer);
+  });
+
+  return selfChart;
+};
+
+/**
+ * counter utils
+ * @param duration
+ * @returns counter
+ */
+export const useCounter = (duration = 60): [Ref<number>, () => void] => {
+  let intervalTimer: ReturnType<typeof setInterval>;
+  onUnmounted(() => {
+    clearInterval(intervalTimer);
+  });
+  const countDown = ref(0);
+
+  return [
+    countDown,
+    () => {
+      countDown.value = duration;
+      intervalTimer = setInterval(() => {
+        if (countDown.value > 0) {
+          countDown.value -= 1;
+        } else {
+          clearInterval(intervalTimer);
+          countDown.value = 0;
+        }
+      }, 1000);
+    },
+  ];
+};

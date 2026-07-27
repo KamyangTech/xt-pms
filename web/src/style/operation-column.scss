@@ -1,0 +1,25 @@
+/**
+ * 操作列统一样式
+ * 方案：固定宽度容器 + t-space 自动换行
+ * - 每行固定显示 4 个按钮
+ * - 超过 4 个按钮自动换行到第二行
+ */
+
+/* 操作列容器 */
+.operation-column {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* 按钮之间的间距 */
+  flex-wrap: wrap; /* 允许换行 */
+}
+
+/* 操作链接样式 */
+.operation-column .t-link {
+  flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+/* 表格操作列单元格 */
+.t-table td[data-colkey="operation"] {
+  padding-right: 16px !important;
+  padding-left: 16px !important;
+}

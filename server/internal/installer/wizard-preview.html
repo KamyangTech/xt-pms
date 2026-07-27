@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xt-PMS 安装向导 · 样式预览</title>
+<style>
+/* TDesign 设计令牌对齐 */
+:root {
+	--td-brand-color: #0052d9;
+	--td-brand-color-hover: #003cab;
+	--td-brand-color-light: rgba(0,82,217,.1);
+	--td-text-primary: rgba(0,0,0,.9);
+	--td-text-secondary: rgba(0,0,0,.6);
+	--td-text-placeholder: rgba(0,0,0,.4);
+	--td-border-color: #dcdcdc;
+	--td-bg-container: #fff;
+	--td-bg-page: #f5f5f5;
+	--td-radius: 3px;
+	--td-radius-medium: 6px;
+	--td-size-m: 32px;
+	--td-font-size-base: 14px;
+	--td-success: #2ba471;
+	--td-error: #d54941;
+	--td-error-light: rgba(213,73,65,.1);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;background:var(--td-bg-page);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.card{background:var(--td-bg-container);border-radius:var(--td-radius-medium);box-shadow:0 1px 4px rgba(0,0,0,.1);width:90%;max-width:580px;padding:48px 48px 44px}
+h1{font-size:24px;font-weight:500;margin-bottom:16px;color:var(--td-text-primary);display:flex;align-items:center;gap:8px}
+h1 svg{flex-shrink:0}
+.sub{color:var(--td-text-secondary);font-size:var(--td-font-size-base);margin-bottom:40px}
+
+/* 步骤条 */
+.steps{display:flex;margin-bottom:36px;gap:0}
+.step-item{flex:1;text-align:center;position:relative}
+.step-item::after{content:'';position:absolute;top:14px;left:calc(50% + 20px);width:calc(100% - 40px);height:2px;background:var(--td-border-color);z-index:0}
+.step-item:last-child::after{display:none}
+.step-num{width:30px;height:30px;border-radius:50%;background:var(--td-border-color);color:var(--td-text-secondary);display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;position:relative;z-index:1;transition:all .2s}
+.step-label{font-size:12px;color:var(--td-text-placeholder);margin-top:6px;transition:all .2s}
+.step-item.active .step-num{background:var(--td-brand-color);color:#fff}
+.step-item.active .step-label{color:var(--td-brand-color);font-weight:500}
+.step-item.done .step-num{background:var(--td-success);color:#fff}
+.step-item.done .step-label{color:var(--td-success)}
+.step-item.done::after{background:var(--td-success)}
+
+/* 步骤内容 */
+.step-panel{display:none;min-height:380px}
+.step-panel.active{display:flex;flex-direction:column}
+.step-panel .btn-row{margin-top:auto}
+
+/* 表单 - TDesign Input 对齐 */
+.form-group{margin-bottom:24px}
+.form-row{display:flex;gap:20px}
+.form-row .form-group{flex:1}
+label{display:block;font-size:var(--td-font-size-base);margin-bottom:10px;color:var(--td-text-primary)}
+input,select{width:100%;height:var(--td-size-m);padding:0 8px;border:1px solid var(--td-border-color);border-radius:var(--td-radius);font-size:var(--td-font-size-base);font-family:inherit;color:var(--td-text-primary);background:var(--td-bg-container);outline:none;transition:all .2s;line-height:var(--td-size-m)}
+input::placeholder{color:var(--td-text-placeholder)}
+input:hover,select:hover{border-color:#bbb}
+input:focus,select:focus{border-color:var(--td-brand-color);box-shadow:0 0 0 2px var(--td-brand-color-light)}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:28px}
+.help{font-size:12px;color:var(--td-text-placeholder);margin-top:6px}
+
+/* 按钮 - TDesign Button 对齐 */
+.btn{display:inline-flex;align-items:center;justify-content:center;height:var(--td-size-m);padding:0 16px;border:none;border-radius:var(--td-radius);font-size:var(--td-font-size-base);font-weight:400;cursor:pointer;transition:all .2s;gap:4px;font-family:inherit;white-space:nowrap}
+.btn-primary{background:var(--td-brand-color);color:#fff}
+.btn-primary:hover{background:var(--td-brand-color-hover)}
+.btn-primary:active{background:#002a7c}
+.btn-primary:disabled{background:#bbd3fb;cursor:not-allowed}
+.btn-success{background:var(--td-success);color:#fff}
+.btn-error{background:var(--td-error);color:#fff}
+.btn-default{background:var(--td-bg-container);border:1px solid var(--td-border-color);color:var(--td-text-primary)}
+.btn-default:hover{border-color:var(--td-brand-color);color:var(--td-brand-color)}
+.btn-default:active{border-color:var(--td-brand-color-hover);color:var(--td-brand-color-hover)}
+.btn-sm{height:24px;padding:0 8px;font-size:12px;white-space:nowrap}
+.btn-row{display:flex;gap:12px;margin-top:32px;justify-content:flex-end}
+
+/* 测试结果 - TDesign Message 对齐 */
+.test-msg{margin-top:8px;font-size:13px;padding:8px 12px;border-radius:var(--td-radius);line-height:20px}
+.test-msg.success{background:#e8f8f2;color:var(--td-success);border:1px solid #b5e3d1}
+.test-msg.error{background:var(--td-error-light);color:var(--td-error);border:1px solid #f3c2bf}
+
+/* 进度 */
+.install-progress{display:none}
+.install-progress.active{display:block}
+.progress-item{display:flex;align-items:center;gap:8px;padding:10px 0;font-size:var(--td-font-size-base);color:var(--td-text-placeholder)}
+.progress-item.done{color:var(--td-success)}
+.progress-item.running{color:var(--td-brand-color);font-weight:500}
+.progress-item.fail{color:var(--td-error)}
+.progress-dot{width:8px;height:8px;border-radius:50%;background:var(--td-border-color);flex-shrink:0}
+.progress-item.done .progress-dot{background:var(--td-success)}
+.progress-item.running .progress-dot{background:var(--td-brand-color);animation:pulse 1s infinite}
+.progress-item.fail .progress-dot{background:var(--td-error)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* 完成页 - TDesign Result 对齐 */
+.done-icon{font-size:64px;text-align:center;margin-bottom:16px}
+.done-title{font-size:20px;text-align:center;margin-bottom:8px;color:var(--td-text-primary)}
+.done-desc{text-align:center;color:var(--td-text-secondary);font-size:var(--td-font-size-base);margin-bottom:24px}
+
+/* 版权信息 */
+.footer{text-align:center;padding:20px;font-size:12px;color:var(--td-text-placeholder)}
+
+/* 预览模式：步骤快捷切换按钮 */
+.preview-nav{position:fixed;top:12px;right:12px;display:flex;gap:6px;z-index:100}
+.preview-nav button{padding:6px 12px;border-radius:var(--td-radius);border:1px solid var(--td-border-color);background:#fff;cursor:pointer;font-size:12px;font-family:inherit;transition:all .2s}
+.preview-nav button:hover{border-color:var(--td-brand-color);color:var(--td-brand-color)}
+.preview-nav button.current{background:var(--td-brand-color);color:#fff;border-color:var(--td-brand-color)}
+</style>
+</head>
+<body>
+
+<!-- 预览快捷切换 -->
+<div class="preview-nav">
+	<button id="nav-step-1" class="current" onclick="showStep(1)">步骤 1 · 数据库</button>
+	<button id="nav-step-2" onclick="showStep(2)">步骤 2 · 安全配置</button>
+	<button id="nav-step-3" onclick="showStep(3)">步骤 3 · 管理员</button>
+	<button id="nav-step-4" onclick="showStep(4)">步骤 4 · 开始安装</button>
+</div>
+
+<div class="card" id="app">
+	<h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.28 595.28" style="width:36px;height:36px"><path d="M11.39 458h109.56s6.16-295.14 104.77-280.07c0 0-66.42-47-126-.56C40.15 223.81 17.55 349.81 11.39 458zM241.48 248.46s-45.2 52.04-58.21 124.63c0 0 68.48 125.31 245.15 88.34 0 0-132.85-10.27-186.94-212.97zM170.94 132.73s117.78 4.11 183.52 212.28c0 0 55.47-75.33 58.89-125.31 0 0-65.05-119.84-242.41-86.97zM472.25 137.52h111.62s4.11 218.44-103.4 290.35c-52.04 27.39-109.56-10.27-109.56-10.27 0 0 46.57 3.42 72.59-68.48 26.02-71.9 31.5-167.09 28.76-211.6z" fill="#04314D"/></svg>Xt-PMS 安装向导</h1>
+	<p class="sub"></p>
+
+	<!-- 步骤指示器 -->
+	<div class="steps">
+		<div class="step-item active" id="step-1-indicator"><div class="step-num">1</div><div class="step-label">数据库</div></div>
+		<div class="step-item" id="step-2-indicator"><div class="step-num">2</div><div class="step-label">安全配置</div></div>
+		<div class="step-item" id="step-3-indicator"><div class="step-num">3</div><div class="step-label">管理员</div></div>
+		<div class="step-item" id="step-4-indicator"><div class="step-num">4</div><div class="step-label">开始安装</div></div>
+	</div>
+
+	<!-- 步骤 1：数据库 -->
+	<div class="step-panel active" id="step-1">
+		<div class="form-row"><div class="form-group"><label>主机地址</label><input id="db-host" value="127.0.0.1" placeholder="127.0.0.1"></div><div class="form-group"><label>端口</label><input id="db-port" value="3306" placeholder="3306"></div></div>
+		<div class="form-row"><div class="form-group"><label>用户名</label><input id="db-user" value="root" placeholder="root"></div><div class="form-group"><label>密码</label><input id="db-password" type="password" placeholder="数据库密码"></div></div>
+		<div class="form-group"><label>数据库名</label><input id="db-name" value="production_pms" placeholder="production_pms"><div class="help">确保数据库已创建（可为空库），安装向导会自动建表</div></div>
+		<button class="btn btn-default" onclick="testDB()" id="btn-test">测试连接</button>
+		<div class="btn-row"><button class="btn btn-primary" id="btn-next-1" disabled onclick="showStep(2)">下一步 →</button></div>
+	</div>
+
+	<!-- 步骤 2：安全配置 -->
+	<div class="step-panel" id="step-2">
+		<div class="form-group"><label>Pepper（密码加盐值）</label><div style="display:flex;gap:8px"><input id="pepper" readonly><button class="btn btn-default" onclick="genRandom('pepper')">重新生成</button></div><div class="help">用于增强密码加密安全性，自动写入配置文件</div></div>
+		<div class="form-group"><label>JWT 密钥</label><div style="display:flex;gap:8px"><input id="jwt-secret" readonly><button class="btn btn-default" onclick="genRandom('jwt-secret')">重新生成</button></div><div class="help">用于签发登录令牌的签名密钥</div></div>
+		<div class="form-row"><div class="form-group"><label>运行模式</label><select id="app-mode"><option value="production">production（生产）</option><option value="development">development（开发）</option></select></div><div class="form-group"><label>服务端口</label><input id="server-port" value="9898" placeholder="9898"></div></div>
+		<div class="btn-row">
+			<button class="btn btn-default" onclick="showStep(1)">← 上一步</button>
+			<button class="btn btn-primary" onclick="showStep(3)">下一步 →</button>
+		</div>
+	</div>
+
+	<!-- 步骤 3：管理员 -->
+	<div class="step-panel" id="step-3">
+		<div class="form-row"><div class="form-group"><label>登录账号</label><input id="admin-username" value="admin" placeholder="admin"></div><div class="form-group"><label>真实姓名</label><input id="admin-realname" placeholder="管理员姓名"></div></div>
+		<div class="form-row"><div class="form-group"><label>登录密码</label><input id="admin-password" type="password" placeholder="至少 6 位"></div><div class="form-group"><label>确认密码</label><input id="admin-password2" type="password" placeholder="再次输入"></div></div>
+		<div class="form-row"><div class="form-group"><label>邮箱</label><input id="admin-email" placeholder="admin@example.com"></div><div class="form-group"><label>手机号</label><input id="admin-phone" placeholder="13800138000"></div></div>
+		<div class="help" style="color:var(--td-text-placeholder);font-size:12px">以上信息仅用于本地系统构建，不会发送至开发者以及任何第三方</div>
+		<div class="btn-row">
+			<button class="btn btn-default" onclick="showStep(2)">← 上一步</button>
+			<button class="btn btn-primary" onclick="showStep(4)">下一步 →</button>
+		</div>
+	</div>
+
+	<!-- 步骤 4：确认安装 -->
+	<div class="step-panel" id="step-4">
+		<div class="install-progress active" id="install-progress">
+			<div class="progress-item done" id="prog-config"><span class="progress-dot"></span>写入配置文件…</div>
+			<div class="progress-item done" id="prog-schema"><span class="progress-dot"></span>创建数据表（59 张）…</div>
+			<div class="progress-item running" id="prog-seed"><span class="progress-dot"></span>导入种子数据…</div>
+			<div class="progress-item" id="prog-admin"><span class="progress-dot"></span>创建管理员账号…</div>
+			<div class="progress-item" id="prog-done"><span class="progress-dot"></span>安装完成</div>
+		</div>
+		<div class="btn-row">
+			<button class="btn btn-default" onclick="showStep(3)">← 上一步</button>
+			<button class="btn btn-primary">开始安装</button>
+		</div>
+	</div>
+</div>
+
+<div class="footer">© <span id="copyright-year">2024-2026</span> 广州锦杨科技有限公司</div>
+
+<script>
+let currentStep = 1;
+
+// 生成随机 hex 字符串
+function randomHex(len) {
+	let arr = new Uint8Array(len);
+	crypto.getRandomValues(arr);
+	return Array.from(arr, b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// 本地生成随机值（不依赖后端 API）
+function genRandom(id) {
+	document.getElementById(id).value = randomHex(32);
+}
+
+// 步骤切换
+function showStep(n) {
+	document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+	document.getElementById('step-'+n).classList.add('active');
+	for(let i=1;i<=4;i++){
+		let el=document.getElementById('step-'+i+'-indicator');
+		el.classList.remove('active','done');
+		if(i<n) el.classList.add('done');
+		if(i==n) el.classList.add('active');
+	}
+	// 更新快捷导航高亮
+	for(let i=1;i<=4;i++){
+		let btn=document.getElementById('nav-step-'+i);
+		btn.classList.toggle('current', i===n);
+	}
+	currentStep = n;
+}
+
+// 模拟测试连接
+function testDB() {
+	let btn=document.getElementById('btn-test');
+	btn.disabled=true; btn.textContent='测试中…';
+	btn.className='btn btn-default';
+	setTimeout(function(){
+		btn.disabled=false;
+		btn.className='btn btn-success';
+		btn.textContent='连接成功';
+		document.getElementById('btn-next-1').disabled=false;
+	}, 800);
+}
+
+// 初始化
+var y = new Date().getFullYear();
+document.getElementById('copyright-year').textContent = y <= 2024 ? '2024' : '2024 - ' + y;
+// 预填 pepper 和 jwt-secret
+document.getElementById('pepper').value = randomHex(32);
+document.getElementById('jwt-secret').value = randomHex(32);
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# ==================== 版本控制 ====================
+.git
+.gitignore
+.gitattributes
+
+# ==================== 依赖安装 ====================
+server/vendor/
+web/node_modules/
+
+# ==================== 编译产物 ====================
+server/bin/
+server/main
+server/pms-server
+server/pms-server-test
+server/*.exe
+web/dist/
+
+# ==================== 本地开发 ====================
+server/config/config.yaml
+server/config.yml
+.env
+.env.*.local
+*.log
+server/logs/
+server/uploads/
+
+# ==================== 测试覆盖率 ====================
+server/coverage.txt
+server/cover.out
+
+# ==================== IDE 配置 ====================
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# ==================== 操作系统 ====================
+.DS_Store
+Thumbs.db
+
+# ==================== 文档 ====================
+*.md
+docs/

@@ -1,0 +1,41 @@
+// 表单基础样式（参考 TDesign 官方表单示例）
+
+.form-basic-container {
+  .form-basic-item {
+    background-color: var(--td-bg-color-container);
+    border-radius: var(--td-radius-default, 6px);
+    padding: 32px;
+  }
+
+  .form-basic-container-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--td-text-color-primary);
+    margin-bottom: 32px;
+  }
+
+  .row-gap {
+    margin-bottom: var(--td-comp-margin-xxl);
+  }
+}
+
+.form-title-gap {
+  margin-top: var(--td-comp-margin-xxl);
+}
+
+.form-submit-container {
+  background-color: var(--td-bg-color-container);
+  border-radius: var(--td-radius-default, 6px);
+  padding: 16px 32px;
+  margin-top: 16px;
+
+  .form-submit-sub {
+    display: flex;
+    justify-content: flex-start;
+
+    .form-submit-left {
+      display: flex;
+      gap: 12px;
+    }
+  }
+}

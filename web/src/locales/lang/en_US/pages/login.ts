@@ -1,0 +1,28 @@
+export default {
+  loginTitle: 'Login in',
+  noAccount: 'No Account?',
+  createAccount: 'Create Account',
+  keepLogin: 'Keep me logged in',
+  forget: 'Forget Account',
+  signIn: 'Sign in',
+  existAccount: 'Exist Account?',
+  refresh: 'refresh',
+  wechatLogin: 'Login with WeChat',
+  accountLogin: 'Login with Account',
+  phoneLogin: 'Login with Mobile Phone',
+  input: {
+    account: 'please enter account',
+    password: 'please enter password',
+    phone: 'please enter phone',
+    verification: 'please enter verification code',
+    captcha: 'enter the result',
+  },
+  required: {
+    account: 'account is required',
+    phone: 'phone is required',
+    password: 'password is required',
+    verification: 'verification code is require',
+    captcha: 'captcha is required',
+  },
+  sendVerification: 'send',
+};

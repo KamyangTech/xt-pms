@@ -1,0 +1,140 @@
+# =============================================================================
+# Xt-PMS Docker Compose
+# =============================================================================
+#
+# 快速开始（一键部署）：
+#   curl -fsSL https://gitee.com/kamyang-tech/xt-pms/raw/develop/deploy/docker-deploy.sh | sh
+#
+# 手动部署：
+#   docker compose up -d
+#
+# 环境变量文件：cp .env.example .env
+# =============================================================================
+
+services:
+  # ==================== MySQL 数据库 ====================
+  mysql:
+    image: mysql:8.0
+    container_name: xt-pms-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-Qk7#mPx2@vN9}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-production_pms}
+      MYSQL_USER: ${MYSQL_USER:-production_pms}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-change_me}
+    # 生产环境建议不暴露 MySQL 端口，仅允许容器间内部访问
+    # 如需本地调试工具连接，取消下方注释并设置 MYSQL_PORT 环境变量：
+    # ports:
+    #   - "${MYSQL_PORT:-3307}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./init_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./init_seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+        reservations:
+          memory: 512M
+
+    networks:
+      - xt-pms-network
+
+  # ==================== 后端服务 ====================
+  server:
+    image: kamyangtech/xt-pms:v0.1.0-beta.1
+    container_name: xt-pms-server
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      PMS_APP_MODE: ${APP_MODE:-production}
+      PMS_DB_HOST: mysql
+      PMS_DB_PORT: 3306
+      PMS_DB_USER: ${MYSQL_USER:-production_pms}
+      PMS_DB_PASSWORD: ${MYSQL_PASSWORD:-change_me}
+      PMS_DB_NAME: ${MYSQL_DATABASE:-production_pms}
+      PMS_JWT_SECRET: ${PMS_JWT_SECRET:-}
+      PMS_SECURITY_PEPPER: ${PMS_SECURITY_PEPPER:-}
+      PMS_SERVER_PORT: "9898"
+      PMS_COOKIE_SECURE: "false"
+      # 管理员自动创建（可选）
+      PMS_ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      PMS_ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      PMS_ADMIN_REAL_NAME: ${ADMIN_REAL_NAME:-管理员}
+      PMS_ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      PMS_ADMIN_PHONE: ${ADMIN_PHONE:-}
+    ports:
+      - "${SERVER_PORT:-9898}:9898"
+    volumes:
+      - server-uploads:/app/uploads
+      - server-logs:/app/logs
+      - server-config:/app/config
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:9898/api/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+    # 日志轮转，避免长期运行占满磁盘
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # 资源限制，防止单服务异常拖垮宿主机
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+    networks:
+      - xt-pms-network
+
+  # ==================== Nginx 反向代理（可选，生产环境使用） ====================
+  # 如需启用，取消下方注释，并修改 server 服务的端口映射：
+  #   ports: ["${SERVER_PORT:-9898}:9898"] → ports: ["127.0.0.1:9898:9898"]
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: xt-pms-nginx
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - server
+  #   ports:
+  #     - "${NGINX_PORT:-80}:80"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+  #   networks:
+  #     - xt-pms-network
+
+networks:
+  xt-pms-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
+  server-uploads:
+    driver: local
+  server-logs:
+    driver: local
+  server-config:
+    driver: local

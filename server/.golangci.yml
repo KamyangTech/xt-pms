@@ -1,0 +1,105 @@
+# =============================================================================
+# golangci-lint 配置
+# 参考腾讯 Go 编码规范与官方推荐配置
+# =============================================================================
+run:
+  timeout: 5m
+  concurrency: 4
+  modules-download-mode: readonly
+
+issues:
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck
+        - gosec
+
+linters:
+  disable-all: true
+  enable:
+    # 内置关键检查器
+    - errcheck        # 检查未处理的错误返回值
+    - gosimple        # 代码简化建议
+    - govet           # go vet 的增强版
+    - ineffassign     # 检查无效赋值
+    - staticcheck     # 静态分析（覆盖 vet、gosimple 等）
+    - typecheck       # 类型检查
+    - unused          # 检查未使用的代码
+
+    # 附加检查器
+    - bodyclose       # 检查 HTTP 响应体是否关闭
+    - durationcheck   # 检查 time.Duration 的误用
+    - errname         # 错误变量命名规范（ErrFoo / FooError）
+    - errorlint       # 检查 error 格式化中的问题
+    - exhaustive      # 检查 switch 枚举覆盖
+    - exportloopref   # 检查循环变量引用逃逸
+    - goconst         # 检查可提取为常量的重复字符串
+    - gocritic        # 代码风格批评器
+    - gofmt           # 代码格式
+    - gosec           # 安全扫描
+    - loggercheck     # 检查日志库（zap）的 key-value 是否配对
+    - misspell        # 拼写检查
+    - nakedret        # 检查裸返回
+    - nilerr          # 检查返回 nil error 但实际有错误的情况
+    - prealloc        # 预分配 slice 建议
+    - revive          # golint 替代品，自定义规则集
+    - unconvert       # 检查不必要的类型转换
+    - unparam         # 检查未使用的参数
+    - wastedassign    # 检查浪费的赋值
+
+linters-settings:
+  errcheck:
+    exclude-functions:
+      - (*os.File).Close
+      - io.ReadAll
+      - database/sql/*.Rows.Close
+  gocritic:
+    enabled-checks:
+      - boolExprSimplify
+      - captLocal
+      - commentFormatting
+      - elseif
+      - emptyStringTest
+      - hexLiteral
+      - indexAlloc
+      - initClause
+      - methodExprCall
+      - nilValReturn
+      - ptrToRefParam
+      - rangeExprCopy
+      - sloppyReassign
+      - stringXbytes
+      - switchTrue
+      - typeAssertChain
+      - underef
+      - unlabelStmt
+      - unslice
+  revive:
+    rules:
+      - name: blank-imports
+      - name: context-as-argument
+      - name: context-keys-type
+      - name: dot-imports
+      - name: error-return
+      - name: error-strings
+      - name: error-naming
+      - name: exported
+      - name: if-return
+      - name: increment-decrement
+      - name: var-naming
+      - name: var-declaration
+      - name: package-comments
+      - name: range
+      - name: receiver-naming
+      - name: time-naming
+      - name: unexported-return
+      - name: indent-error-flow
+      - name: unreachable-code
+      - name: unused-parameter
+  gofmt:
+    simplify: true
+  misspell:
+    locale: US

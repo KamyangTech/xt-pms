@@ -1,0 +1,108 @@
+# ============================================================
+# xt-pms 后端配置文件模板
+# 使用方式：
+#   1. 复制为 config/config.yaml
+#   2. 修改其中的敏感值（数据库密码、JWT Secret 等）
+#   3. 生产环境推荐通过环境变量注入敏感信息（如下方说明）
+# ============================================================
+
+server:
+  port: 9898
+  cookie_secure: false       # Cookie Secure 标志: true=仅HTTPS发送
+                             # 公网HTTPS部署应设为 true
+  max_body_size: 10485760    # 请求体最大大小（字节）10MB，防 DoS 大包攻击
+
+cors:
+  # 前后端同源部署（SPA 内嵌在 server 中，默认模式）时无需配置
+  # 仅前端开发或前后端分离部署时需要在此添加前端域名
+  allowed_origins:
+    - "http://localhost:5173"   # 前端开发服务器 (Vite dev)
+    - "http://localhost:9898"   # 本地访问
+
+database:
+  host: localhost
+  port: 3306
+  user: your_database_user
+  password: your_database_password
+  dbname: production_pms
+  max_open_conns: 100
+  max_idle_conns: 25
+  conn_max_lifetime: 10m
+  conn_max_idle_time: 5m
+
+jwt:
+  secret: your_jwt_secret_key_change_in_production
+  expire: 7200               # JWT 过期时间（秒）
+
+security:
+  pepper: "CHANGE_ME_TO_A_RANDOM_STRING_AT_LEAST_32_CHARS"
+
+app:
+  mode: development           # development 或 production
+  update_source_url: "https://gitee.com/api/v5/repos/kamyang-tech/xt-pms/releases/latest"  # 系统更新源（Gitee/GitHub API）
+  service_name: "xt-pms"      # systemd 服务名（1Panel 部署时查看面板中的服务名称）
+  update_mode: "auto"         # 更新模式: auto(自动检测) / systemd / supervisor(1Panel/容器等) / manual
+
+auth:
+  super_admin_user_id: 1
+  super_admin_role_type: 1
+
+log:
+  level: debug                # debug/info/warn/error
+  format: console             # json/console
+  output: both                # both/file/console
+  file:
+    path: logs/pms.log
+    max_size: 100             # MB
+    max_backups: 5
+    max_age: 30               # 天
+    compress: true
+
+upload:
+  base_path: "./uploads"      # 本地存储根目录
+  max_size: 10485760          # 最大文件大小 10MB
+  thumbnail_max_width: 300    # 缩略图最大宽度（像素），图片上传时自动生成
+  thumbnail_max_height: 300   # 缩略图最大高度（像素），保持宽高比缩放
+  allowed_image_types:
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".gif"
+    - ".webp"
+  allowed_file_types:
+    - ".jpg"
+    - ".jpeg"
+    - ".png"
+    - ".gif"
+    - ".webp"
+    - ".pdf"
+    - ".doc"
+    - ".docx"
+    - ".xls"
+    - ".xlsx"
+    - ".zip"
+    - ".rar"
+    - ".7z"
+    - ".tar"
+    - ".gz"
+
+# ============================================================
+# 环境变量覆盖说明
+# 以下环境变量优先级高于 YAML 配置，适用于容器化/K8s 部署：
+# ============================================================
+#
+#   PMS_DB_HOST         # 数据库主机地址
+#   PMS_DB_PORT         # 数据库端口
+#   PMS_DB_USER         # 数据库用户
+#   PMS_DB_PASSWORD     # 数据库密码
+#   PMS_DB_NAME         # 数据库名称
+#   PMS_JWT_SECRET      # JWT 签名密钥
+#   PMS_SECURITY_PEPPER # 密码加密胡椒
+#   PMS_APP_MODE        # 应用模式 (development/production)
+#   PMS_SERVER_PORT     # 服务端口
+#   PMS_COOKIE_SECURE   # Cookie Secure 标志 (true/false)
+#   PMS_LOG_LEVEL          # 日志级别 (debug/info/warn/error)
+#   PMS_UPDATE_SOURCE_URL  # 系统更新源 URL
+#   PMS_SERVICE_NAME       # systemd 服务名（默认 xt-pms）
+#   PMS_CONFIG_PATH        # 配置文件路径（默认 config/config.yaml）
+#

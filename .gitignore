@@ -1,0 +1,168 @@
+# ==================== 前端 (Vue3 + Vite) ====================
+web/node_modules/
+web/dist/
+web/.env.local
+web/.env.*.local
+web/npm-debug.log*
+yarn-error.log*
+*.log
+
+# Vite
+web/*.local
+
+# 依赖文件
+web/yarn.lock
+web/pnpm-lock.yaml
+
+# 构建缓存
+web/.vite/
+web/node_modules/.cache/
+
+# TypeScript
+web/*.tsbuildinfo
+
+# ==================== 后端 (Go) ====================
+# Go 编译输出
+server/*.exe
+server/*.exe~
+server/*.dll
+server/*.so
+server/*.dylib
+server/*.test
+server/*.out
+server/bin/
+server/dist/
+dist/
+
+# 前端嵌入临时目录（make build/release 时自动生成，构建完删除）
+server/cmd/web-dist/
+
+# Go 工作区文件
+server/go.work
+
+# 配置文件（包含敏感信息）
+server/config.yaml
+server/config.yml
+server/config/config.yaml
+server/.env
+server/.env.*
+
+# 上传文件目录（本地存储）
+server/uploads/
+
+# 日志文件
+server/logs/
+
+# 编译产物
+server/main
+server/pms-server
+server/pms-server-test
+
+# 测试覆盖率
+server/coverage.txt
+server/cover.out
+
+# Vendor 目录（如使用 Go Modules 则不需要）
+server/vendor/
+
+# 数据库备份文件
+server/backup/
+*_bk.sql
+*_bk_data.sql
+*-backup.*
+*-old.*
+*.bak
+
+# ==================== 环境变量文件 ====================
+.env
+.env.local
+.env.*.local
+
+# ==================== Docker ====================
+docker-compose.override.yml
+
+# ==================== IDE 和编辑器 ====================
+# VS Code
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# CodeBuddy (AI 工具配置)
+.codebuddy/
+
+# 灵码 (AI 工具配置)
+.lingma/
+
+# JetBrains IDEs (GoLand, WebStorm, etc.)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+.session.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# ==================== 项目文档（不跟踪） ====================
+doc/
+
+# ==================== 操作系统文件 ====================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.trash-*
+.nfs*

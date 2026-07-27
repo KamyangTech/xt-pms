@@ -1,0 +1,45 @@
+export default {
+  markDay: 'Good afternoon, today marks your 100th day at Tencent',
+  personalInfo: {
+    title: 'Personal Info',
+    position: 'Employee of the Hong Kong and Macau Business Expansion team',
+
+    desc: {
+      mobile: 'Mobile',
+      email: 'Email',
+      position: 'Position',
+      joinDay: 'Day of join',
+      companyLogo: 'Company Logo',
+    },
+    edit: 'Edit Profile',
+    changePassword: 'Change Password',
+  },
+  editProfile: {
+    title: 'Edit Profile',
+    success: 'Profile updated successfully',
+    error: 'Update failed, please try again',
+    dept: 'Department',
+    username: 'Username',
+  },
+  changePasswordDialog: {
+    title: 'Change Password',
+    oldPassword: 'Old Password',
+    oldPasswordPlaceholder: 'Enter old password',
+    newPassword: 'New Password',
+    newPasswordPlaceholder: 'Enter new password',
+    confirmPassword: 'Confirm Password',
+    confirmPasswordPlaceholder: 'Re-enter new password',
+    oldPasswordRequired: 'Please enter old password',
+    newPasswordRequired: 'Please enter new password',
+    newPasswordMin: 'Password must be at least 6 characters',
+    confirmPasswordRequired: 'Please re-enter new password',
+    passwordMismatch: 'Passwords do not match',
+    success: 'Password changed successfully',
+    error: 'Failed to change password, please try again',
+  },
+  workOverview: {
+    title: 'Work Overview',
+    moldOrder: 'New Mold Orders (Month)',
+    productionOrder: 'New Production Orders (Month)',
+  },
+};

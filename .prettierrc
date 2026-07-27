@@ -1,0 +1,13 @@
+# =============================================================================
+# Prettier 配置
+# 代码格式化统一规则，与 ESLint 配合使用
+# =============================================================================
+
+semi: true
+singleQuote: true
+trailingComma: all
+tabWidth: 2
+printWidth: 100
+endOfLine: lf
+arrowParens: always
+bracketSpacing: true

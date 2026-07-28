@@ -360,6 +360,21 @@ BEGIN;
 INSERT INTO `sys_security_config` (`id`, `token_expire`, `max_login_attempts`, `lock_duration`, `password_min_len`, `password_require_upper`, `password_require_number`, `password_require_special`, `cookie_secure`, `websocket_secure`, `create_time`, `update_time`) VALUES (1, 7200, 5, 900, 6, 0, 1, 0, 0, 0, '2026-05-15 08:44:02', '2026-05-15 08:44:02');
 COMMIT;
 
+-- ========== process_template ==========
+BEGIN;
+INSERT INTO `process_template` (`id`, `group_id`, `group_name`, `process_name`, `sort`, `status`, `remark`, `created_at`, `updated_at`) VALUES
+(1, 1, '准备阶段', '定料', 1, 1, '', NOW(), NOW()),
+(2, 2, '加工阶段', 'CNC加工', 1, 1, 'CNC数控加工工序', NOW(), NOW()),
+(3, 2, '加工阶段', '磨床', 2, 1, '磨床加工工序', NOW(), NOW()),
+(4, 2, '加工阶段', '放电加工', 3, 1, '电火花加工工序', NOW(), NOW()),
+(5, 2, '加工阶段', '线切割', 4, 1, '线切割加工工序', NOW(), NOW()),
+(6, 2, '加工阶段', '钳工', 5, 1, '钳工装配工序', NOW(), NOW()),
+(7, 3, '后处理阶段', '抛光', 6, 1, '抛光处理工序', NOW(), NOW()),
+(8, 4, '装配阶段', '装配', 7, 1, '模具装配工序', NOW(), NOW()),
+(9, 4, '装配阶段', '检验', 8, 2, '质量检验工序', NOW(), NOW()),
+(10, 4, '装配阶段', '合模', 9, 1, '', NOW(), NOW());
+COMMIT;
+
 -- ========== sys_company ==========
 BEGIN;
 INSERT INTO `sys_company` (`id`, `company_name`, `short_name`, `english_name`, `english_short_name`, `logo`, `create_time`, `update_time`) VALUES (1, '广州锦杨科技有限公司', '锦杨科技', '', 'Kamyang', NULL, '2026-04-03 17:21:43', '2026-05-16 16:32:51');

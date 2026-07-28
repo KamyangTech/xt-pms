@@ -15,6 +15,11 @@
 #   GITEE_TOKEN      Gitee Access Token，用于提高 API 频率上限（可选）
 #   NGINX_ENABLED    是否部署 Nginx 反向代理（true/false，默认 false）
 #   SERVER_PORT      服务端口（默认 9898）
+#   NGINX_PORT       Nginx 监听端口（默认 80，仅在 NGINX_ENABLED=true 时生效）
+#
+# 自定义端口：
+#   1) 交互模式：脚本会询问，直接回车使用默认值
+#   2) 环境变量：SERVER_PORT=8888 bash quick-install.sh
 # =============================================================================
 
 set -euo pipefail
@@ -61,8 +66,119 @@ fetch_latest_tag() {
     printf '%s' "$tag"
 }
 
+# -------------------- 端口工具 --------------------
+is_port_in_use() {
+    local port=$1
+    if ss -tlnp 2>/dev/null | grep -qE "[.:]${port}[[:space:]]"; then
+        return 0
+    fi
+    if netstat -tlnp 2>/dev/null | grep -qE "[.:]${port}[[:space:]]"; then
+        return 0
+    fi
+    if command -v lsof >/dev/null 2>&1 && lsof -i ":${port}" >/dev/null 2>&1; then
+        return 0
+    fi
+    return 1
+}
+
+is_valid_port() {
+    local port=$1
+    case "$port" in
+        ''|*[!0-9]*) return 1 ;;
+    esac
+    if [ "$port" -lt 1 ] || [ "$port" -gt 65535 ]; then
+        return 1
+    fi
+    return 0
+}
+
+can_read_tty() {
+    if [ -r /dev/tty ] 2>/dev/null; then
+        return 0
+    fi
+    if [ -t 0 ]; then
+        return 0
+    fi
+    return 1
+}
+
+prompt_port() {
+    local msg=$1
+    local default_port=$2
+    local input_port=""
+
+    while :; do
+        printf "%s [%s]: " "$msg" "$default_port" >&2
+        if [ -r /dev/tty ] 2>/dev/null; then
+            read -r input_port </dev/tty || input_port=""
+        else
+            read -r input_port || input_port=""
+        fi
+
+        if [ -z "$input_port" ]; then
+            input_port=$default_port
+        fi
+
+        if ! is_valid_port "$input_port"; then
+            log_warn "无效端口（必须是 1-65535 之间的数字）" >&2
+            continue
+        fi
+
+        if [ "$input_port" -lt 1024 ]; then
+            log_warn "建议使用 1024 以上的非特权端口" >&2
+            printf "      是否仍要使用 %s？[y/N]: " "$input_port" >&2
+            local yn
+            if [ -r /dev/tty ] 2>/dev/null; then
+                read -r yn </dev/tty || yn="n"
+            else
+                read -r yn || yn="n"
+            fi
+            case "$yn" in
+                y|Y|yes|YES) ;;
+                *) continue ;;
+            esac
+        fi
+
+        if is_port_in_use "$input_port"; then
+            log_warn "端口 $input_port 已被占用，请换一个端口" >&2
+            continue
+        fi
+
+        printf "%s" "$input_port"
+        return 0
+    done
+}
+
+configure_ports() {
+    log_step "配置服务端口"
+
+    : "${SERVER_PORT:=9898}"
+    : "${NGINX_PORT:=80}"
+
+    if can_read_tty; then
+        echo "" >&2
+        log_info "请确认服务端口配置（直接回车使用默认值）" >&2
+        echo "" >&2
+        SERVER_PORT=$(prompt_port "服务端口 (PMS_SERVER_PORT)" "$SERVER_PORT")
+        if [ "${NGINX_ENABLED:-false}" = "true" ]; then
+            NGINX_PORT=$(prompt_port "Nginx 监听端口 (NGINX_PORT)" "$NGINX_PORT")
+        fi
+    else
+        log_info "当前为非交互模式，使用环境变量/默认值：SERVER_PORT=$SERVER_PORT" >&2
+        if is_port_in_use "$SERVER_PORT"; then
+            log_error "端口 $SERVER_PORT 已被占用，请通过环境变量 SERVER_PORT 指定其他端口" >&2
+            log_error "  示例：SERVER_PORT=8888 bash quick-install.sh" >&2
+            exit 1
+        fi
+    fi
+
+    export SERVER_PORT NGINX_PORT
+    log_info "端口配置完成：SERVER_PORT=$SERVER_PORT${NGINX_ENABLED:+ NGINX_PORT=$NGINX_PORT}" >&2
+}
+
 # -------------------- 主流程 --------------------
 require_root
+configure_ports
 
 # 记录原始工作目录（进入临时目录前保存）
 XT_PMS_HOME="${PWD}"
@@ -117,5 +233,6 @@ log_step "执行部署脚本"
 sudo -E env \
     XT_PMS_HOME="${XT_PMS_HOME}" \
     NGINX_ENABLED="${NGINX_ENABLED:-false}" \
+    NGINX_PORT="${NGINX_PORT:-80}" \
     SERVER_PORT="${SERVER_PORT:-9898}" \
     bash deploy.sh

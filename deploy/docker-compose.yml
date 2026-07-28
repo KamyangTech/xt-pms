@@ -3,7 +3,7 @@
 # =============================================================================
 #
 # 快速开始（一键部署）：
-#   curl -fsSL https://gitee.com/kamyang-tech/xt-pms/raw/develop/deploy/docker-deploy.sh | sh
+#   curl -fsSL https://gitee.com/kamyang-tech/xt-pms/raw/main/deploy/docker-deploy.sh | sh
 #
 # 手动部署：
 #   docker compose up -d

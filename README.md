@@ -306,7 +306,7 @@ make run/web
 
 ```bash
 # 一键部署
-curl -fsSL https://gitee.com/kamyang-tech/xt-pms/raw/develop/deploy/docker-deploy.sh | sh
+curl -fsSL https://gitee.com/kamyang-tech/xt-pms/raw/main/deploy/docker-deploy.sh | sh
 
 # 或手动部署
 cp deploy/.env.example deploy/.env
@@ -372,7 +372,7 @@ sudo nginx -t && sudo systemctl reload nginx
 3. 创建 Go 服务：启动命令 `/opt/xt-pms/xt-pms`，端口 `9898`
 4. 创建网站：目录 `/opt/xt-pms/web`，反向代理 `^/api/` → `http://127.0.0.1:9898`
 
-详细的部署指引请参考 [Xt-PMS 部署文档](https://doc.pms.xintest.cn/guide/quick-start.html)。
+详细的部署指引请参考 [Xt-PMS 部署文档](https://doc.pms.kamyang.com/guide/quick-start.html)。
 
 ---
 

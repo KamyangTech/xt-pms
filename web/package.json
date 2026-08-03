@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@types/event-source-polyfill": "^1.0.5",
-    "@vueuse/core": "^12.3.0",
+    "@vueuse/core": "^12.8.2",
     "axios": "^1.18.1",
     "dayjs": "^1.11.13",
     "dompurify": "^3.4.12",
